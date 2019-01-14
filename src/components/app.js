@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
-import { get } from 'idb-keyval';
+import { get } from 'idb-keyval/dist/idb-keyval-iife.min.js';
 
 import { createCalendar } from '../utils';
 

@@ -1,4 +1,4 @@
-import { set } from 'idb-keyval';
+import { set } from 'idb-keyval/dist/idb-keyval-iife.min.js';
 import { getTodayKey } from '../utils';
 
 export default app => {
