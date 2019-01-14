@@ -54,7 +54,6 @@ export function addHabitsToCalendar(days,calendar){
   Object.keys(days).forEach( day => {
     let date = day.split('-');
     let index = calendar.findIndex( el => el && el.day === +date[2] && el.month === +date[1]-1 && el.year === +date[0]);
-    console.log(day, index > -1 ? 'found': 'not-found');
     if(index > -1){
       var today = calendar[index];
       var prevDay = calendar[index-1];
