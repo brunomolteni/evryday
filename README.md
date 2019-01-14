@@ -1,6 +1,8 @@
 # evryday
 
-## CLI Commands
+this is a copy of the functionality from [Everyday](https://everyday.app/), made with Preact.
+
+## Development Commands
 
 ``` bash
 # install dependencies
