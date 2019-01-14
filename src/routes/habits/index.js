@@ -1,4 +1,4 @@
-import { h } from 'preact';
+import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import style from './style';
 
@@ -34,15 +34,23 @@ const CalendarColumn = ({day,habits}) => (
 	</div>
 );
 
-const Habits = ({habits, days, calendar, trackHabit}) => {
-	let calendarWithHabits = addHabitsToCalendar(days, calendar);
-	return (
-	<div class={style.Home}>
-		{habits && <HabitsColumn habits={habits} track={habit => trackHabit(habit)} today={days[today]}/>}
-		<div class={style.Calendar}>
-			{calendar && calendar.map( day => day && <CalendarColumn day={day} habits={habits} />)}
+export class Habits extends Component {
+	scrollToEnd = el => {
+		el.scrollTo(el.scrollWidth,0);
+	}
+	componentDidMount() {
+		this.scrollToEnd(this.cal)
+	}
+	render({habits, days, calendar, trackHabit}){
+		let calendarWithHabits = addHabitsToCalendar(days, calendar);
+		return (
+		<div class={style.Home}>
+			{habits && <HabitsColumn habits={habits} track={habit => trackHabit(habit)} today={days[today]}/>}
+			<div class={style.Calendar} ref={cal => cal && (!this.cal ? (this.cal = cal, this.scrollToEnd(cal) : false}>
+				{calendar && calendar.map( day => day && <CalendarColumn day={day} habits={habits} />)}
+			</div>
 		</div>
-	</div>
-) };
+	) };
+}
 
 export default Habits;
