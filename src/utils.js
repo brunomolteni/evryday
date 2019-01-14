@@ -1,7 +1,6 @@
 import {Calendar} from 'calendar-base';
 
 const cal = new Calendar;
-window.cal = cal;
 
 export function getTodayKey() {
   return (new Date).toISOString().split('T')[0];
