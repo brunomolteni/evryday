@@ -1,12 +1,16 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
-import { get, set } from 'idb-keyval';
+import { get } from 'idb-keyval';
+
+import { createCalendar } from '../utils';
 
 import Header from './header';
 
 // Code-splitting is automated for routes
 import Habits from '../routes/habits';
 import Settings from '../routes/settings';
+
+import actionsCreator from '../actions';
 
 export default class App extends Component {
 
@@ -15,17 +19,22 @@ export default class App extends Component {
 		days: {}
 	};
 
-	/** Gets fired when the route changes.
-	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
-	 *	@param {string} event.url	The newly routed URL
-	 */
+	constructor(props){
+		super(props);
+		this.actions = actionsCreator(this);
+
+	}
+
 	handleRoute = e => {
 		this.currentUrl = e.url;
 	};
 
 	hydrateStateWithLocalStorage = () => {
 		get('state').then( data => {
-			if(data) this.setState(data);
+			if(data){
+				this.setState(data);
+			 }
+			 this.cal = createCalendar(data && data.days);
 		});
 	}
 
@@ -33,13 +42,13 @@ export default class App extends Component {
 		this.hydrateStateWithLocalStorage();
 	}
 
-	render() {
+	render(props, {habits,days} ) {
 		return (
 			<div id="app">
 				<Header />
 				<Router onChange={this.handleRoute}>
-					<Habits path="/" />
-					<Settings path="/settings"/>
+					<Habits path="/" {...this.state} {...this.actions.tracking} calendar={this.cal}/>
+					<Settings path="/settings" {...this.state} {...this.actions.habits} clear={this.actions.tracking.clearTracking}/>
 				</Router>
 			</div>
 		);
