@@ -46,7 +46,7 @@ export class Habits extends Component {
 		return (
 		<div class={style.Home}>
 			{habits && <HabitsColumn habits={habits} track={habit => trackHabit(habit)} today={days[today]}/>}
-			<div class={style.Calendar} ref={cal => cal && (!this.cal ? (this.cal = cal, this.scrollToEnd(cal) : false}>
+			<div class={style.Calendar} ref={cal => cal && (this.cal = cal, this.scrollToEnd(cal)) }>
 				{calendar && calendar.map( day => day && <CalendarColumn day={day} habits={habits} />)}
 			</div>
 		</div>
